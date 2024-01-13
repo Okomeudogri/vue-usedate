@@ -4,7 +4,7 @@
 
     <div>
       <p>
-        Day: {{ newDay }}
+        Day: {{ newDay() }}
         <span>
           {{ addedDay === 0
             ? null
@@ -18,7 +18,7 @@
 
     <div>
       <p>
-        Month: {{ newMonth }}
+        Month: {{ newMonth() }}
         <span>
           {{ addedMonth === 0
             ? null
@@ -29,6 +29,7 @@
       </p>
       <button @click="handleAddedMonth">Add Months</button>
     </div>
+    <h1>{{ formattedDate }}</h1>
 
     <div class="action-btn">
       <button
@@ -53,7 +54,16 @@ import useDate from "../index"
     const { date, addDay, addMonth } = useDate();
     const addedDay = ref(0);
     const addedMonth = ref(0);
-    const newdate = ref(date.value.toString());
+    const formattedDate = ref(date.value.toLocaleString('en-US',{
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZone: 'Africa/Lagos'
+    }));
 
     const handleAddedDay = () => {
       addedDay.value += 1;
@@ -65,7 +75,16 @@ import useDate from "../index"
 
     const handleAddedDaysAndMonths = () => {
       const resultDate = addMonth(addedMonth.value, addDay(addedDay.value));
-      newdate.value = resultDate.toString();
+      formattedDate.value = resultDate.toLocaleString('en-US',{
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        timeZone: 'Africa/Lagos'
+      });
     };
 
     const newMonth = () => {
@@ -77,7 +96,16 @@ import useDate from "../index"
     };
 
     const handleReset = () => {
-      newdate.value = date.value.toString();
+      formattedDate.value = date.value.toLocaleString('en-US', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        timeZone: 'Africa/Lagos'
+      });
       addedDay.value = 0;
       addedMonth.value = 0;
     };
